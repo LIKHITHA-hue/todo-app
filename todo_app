@@ -1,0 +1,61 @@
+import os
+
+FILENAME = "tasks.txt"
+
+# Create the file if it doesn't exist
+if not os.path.exists(FILENAME):
+    open(FILENAME, "w").close()
+
+def show_tasks():
+    print("\nYour Tasks:")
+    with open(FILENAME, "r") as file:
+        tasks = file.readlines()
+        if not tasks:
+            print("No tasks yet!")
+        for i, task in enumerate(tasks, 1):
+            print(f"{i}. {task.strip()}")
+    print()
+
+def add_task():
+    task = input("Enter a new task: ")
+    with open(FILENAME, "a") as file:
+        file.write(task + "\n")
+    print("Task added!\n")
+
+def delete_task():
+    show_tasks()
+    try:
+        task_no = int(input("Enter task number to delete: "))
+        with open(FILENAME, "r") as file:
+            tasks = file.readlines()
+        if 1 <= task_no <= len(tasks):
+            tasks.pop(task_no - 1)
+            with open(FILENAME, "w") as file:
+                file.writelines(tasks)
+            print("Task deleted!\n")
+        else:
+            print("Invalid task number!\n")
+    except ValueError:
+        print("Enter a valid number!\n")
+
+while True:
+    print("TO-DO APP")
+    print("1. View Tasks")
+    print("2. Add Task")
+    print("3. Delete Task")
+    print("4. Exit")
+
+    choice = input("Choose an option: ")
+
+    if choice == "1":
+        show_tasks()
+    elif choice == "2":
+        add_task()
+    elif choice == "3":
+        delete_task()
+    elif choice == "4":
+        print("Goodbye dawg!")
+        break
+    else:
+        print("Invalid choice!\n")
+2
